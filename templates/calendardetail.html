@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+<br />
+<div class="row">
+	<div class="col-sm-6">
+		<select id="zoneSelect" class="form-control" onchange="zoneChanged()">
+  			<option value="0">-- Select Parking Zone --</option>
+  			{% for zone in ZONES %}
+				<option value="{{ zone.ID }}">{{ zone.NAME }}</option>
+			{% endfor %}
+		</select>
+	</div>
+</div>
+<br />
+<div class="row">
+	<div class="col-lg-12">
+    	<div class="panel-body" id="calendarZoneID" style="height: 380px;">    
+        </div>
+	</div>
+</div>
+
+
+<link rel="stylesheet" href='{% static "css/d3-day-hour-calendar-theme.css" %}' />
+<script src='{% static "js/draw-calendar.js" %}' ></script>
+<script src='{% static "js/draw-day-hour-calendar.js" %}' ></script>
+<script>
+
+function zoneChanged() {
+	
+	$("#calendarZoneID").empty();
+	$("#zoneSelect option[value='0']").remove();
+	if ($("#zoneSelect").val()!= 0){
+		$.getJSON( '{% url "getcalendardetail" %}',{
+			zone: $("#zoneSelect").val()
+	    })
+		.done(function(data, status, xhr) {
+			if (status == "success"){
+				if (data != null) {
+					drawDayHourCalendar("#calendarZoneID", data);
+				}
+  			} else {
+	  			alert (status);
+  			}
+		})
+		.fail(function(object, t, message) {
+  			alert(t+"\n"+message);
+		});
+	}
+}
+
+</script>
+
+{% endblock content %}

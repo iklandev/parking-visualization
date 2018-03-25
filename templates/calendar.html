@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+<br />
+<div class="row">
+	<div id="btnCalendarType" class="btn-group" data-toggle="buttons" style="width: 100%">
+  		<label class="btn btn-success active" style="width: 50%">
+    		<input type="radio" name="options" id="numberofEvents" autocomplete="off" checked> Number of Events
+  		</label>
+  		<label class="btn btn-success" style="width: 50%">
+    		<input type="radio" name="options" id="parkingFee" autocomplete="off"> Parking Fee
+  		</label>
+	</div>
+</div>
+<br />
+<div class="row">
+	<div class="col-sm-12" id="calendarID"></div>
+</div>
+
+<link rel="stylesheet" href='{% static "css/d3-calendar-theme.css" %}' />
+<script src='{% static "js/draw-calendar.js" %}' ></script>
+<script>
+
+$("#btnCalendarType :input").change(function() {
+    if (this.id == "numberofEvents"){
+    	getEventsDailySummary();
+    } else {
+    	getFeesDailySummary();
+    }
+});
+
+getEventsDailySummary();
+
+function getEventsDailySummary() {	
+	$("#calendarID").empty();
+	$.getJSON('{% url "geteventssummarydaily" %}').done(
+			function(data, status, xhr) {
+				if (status == "success") {
+					if (data['DATA'].length > 0) {
+						drawCalendar("#calendarID", data);
+					}
+				} else {
+					alert(status);
+				}
+			}).fail(function(object, t, message) {
+		alert(t + "\n" + message);
+	});
+}
+
+function getFeesDailySummary() {	
+	$("#calendarID").empty();
+	$.getJSON('{% url "getfeessummarydaily" %}').done(
+			function(data, status, xhr) {
+				if (status == "success") {
+					if (data['DATA'].length > 0) {
+						drawCalendar("#calendarID", data)
+					}
+				} else {
+					alert(status);
+				}
+			}).fail(function(object, t, message) {
+		alert(t + "\n" + message);
+	});
+}
+
+</script>
+
+{% endblock content %}

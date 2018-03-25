@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="row">
+	<div class="col-sm-6"><h2>Monday</h2></div>
+	<div class="col-sm-6"><h2>Tuesday</h2></div>
+</div>
+<div class="row">
+	<div class="col-sm-6">
+		<div class="row">
+			<div id="mapMonday" style="height: 350px;  margin: 15px;"></div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="row">
+			<div id="mapTuesday" style="height: 350px;  margin: 15px;"></div>
+		</div>
+	</div>	
+</div>
+
+<div class="row">
+	<div class="col-sm-6"><h2>Wednesday</h2></div>
+	<div class="col-sm-6"><h2>Thursday</h2></div>
+</div>
+<div class="row">
+	<div class="col-sm-6">
+		<div class="row">
+			<div id="mapWednesday" style="height: 350px;  margin: 15px;"></div>
+		</div>
+	</div>	
+	<div class="col-sm-6">
+		<div class="row">
+			<div id="mapThursday" style="height: 350px;  margin: 15px;"></div>
+			</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-6"><h2>Friday</h2></div>
+	<div class="col-sm-6"><h2>Saturday</h2></div>
+</div>
+<div class="row">
+	<div class="col-sm-6">
+		<div class="row">
+			<div id="mapFriday" style="height: 350px; margin: 15px;"></div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="row">
+			<div id="mapSaturday" style="height: 350px; margin: 15px;"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-6"><h2>Sunday</h2></div>
+</div>
+<div class="row">
+	<div class="col-sm-6">
+		<div class="row">
+			<div id="mapSunday" style="height: 350px; margin: 15px;"></div>
+		</div>
+	</div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDO3vN1CGPR58k_TOLZzrJauDyQ0uTrQY&libraries=visualization"></script>
+<script type="text/javascript">
+
+var mapMonday, heatmapMonday;
+var mapTuesday, heatmapTuesday;
+var mapWednesday, heatmapWednesday;
+var mapThursday, heatmapThursday;
+var mapFriday, heatmapFriday;
+var mapSaturday, heatmapSaturday;
+var mapSunday, heatmapSunday;
+var bermudaCenter = new google.maps.LatLng(32.32509336366491, -64.77360988378905); 
+var bermudaZoom = 11;
+
+	<!-- MONDAY -->
+	mapMonday = new google.maps.Map(document.getElementById('mapMonday'), {
+    	zoom: bermudaZoom,
+    	center: bermudaCenter,
+    	mapTypeId: 'satellite'
+  	});
+	
+	<!-- TUESDAY -->
+	mapTuesday = new google.maps.Map(document.getElementById('mapTuesday'), {
+		zoom: bermudaZoom,
+    	center: bermudaCenter,
+    	mapTypeId: 'satellite'
+  	});
+	
+	<!-- WEDNESDAY -->
+	mapWednesday = new google.maps.Map(document.getElementById('mapWednesday'), {
+		zoom: bermudaZoom,
+    	center: bermudaCenter,
+    	mapTypeId: 'satellite'
+  	});
+			
+	<!-- THURSDAY -->
+	mapThursday = new google.maps.Map(document.getElementById('mapThursday'), {
+		zoom: bermudaZoom,
+    	center: bermudaCenter,
+    	mapTypeId: 'satellite'
+  	});
+	
+	<!-- FRIDAY -->
+	mapFriday = new google.maps.Map(document.getElementById('mapFriday'), {
+		zoom: bermudaZoom,
+    	center: bermudaCenter,
+    	mapTypeId: 'satellite'
+  	});
+	
+	<!-- SATURDAY -->
+	mapSaturday = new google.maps.Map(document.getElementById('mapSaturday'), {
+		zoom: bermudaZoom,
+    	center: bermudaCenter,
+    	mapTypeId: 'satellite'
+  	});
+	
+	<!-- SUNDAY -->
+	mapSunday = new google.maps.Map(document.getElementById('mapSunday'), {
+		zoom: bermudaZoom,
+    	center: bermudaCenter,
+    	mapTypeId: 'satellite'
+  	});
+	
+	
+
+	function addHeatMap (data, dayType) {
+		switch(dayType) {
+	    case "1":
+	    	heatmapMonday = new google.maps.visualization.HeatmapLayer({
+	            data: data,
+	            map: mapMonday
+	          });
+	        break;
+	    case "2":
+	    	heatmapTuesday = new google.maps.visualization.HeatmapLayer({
+	            data: data,
+	            map: mapTuesday
+	          });
+	        break;
+	    case "3":
+	    	heatmapWednesday = new google.maps.visualization.HeatmapLayer({
+	            data: data,
+	            map: mapWednesday
+	          });
+	    	break;
+	    case "4":
+	    	heatmapThursday = new google.maps.visualization.HeatmapLayer({
+	            data: data,
+	            map: mapThursday
+	          });
+	    	break;
+	    case "5":
+	    	heatmapFridy = new google.maps.visualization.HeatmapLayer({
+	            data: data,
+	            map: mapFriday
+	          });
+	    	break;
+	    case "6":
+	    	heatmapSaturday = new google.maps.visualization.HeatmapLayer({
+	            data: data,
+	            map: mapSaturday
+	          });
+	    	break;
+	    case "7":
+	    	heatmapSunday = new google.maps.visualization.HeatmapLayer({
+	            data: data,
+	            map: mapSunday
+	          });
+	    	break;
+	    default:
+	        break;
+	}
+	}
+
+	getDataForDayType("1");
+	getDataForDayType("2");
+	getDataForDayType("3");
+	getDataForDayType("4");
+	getDataForDayType("5");
+	getDataForDayType("6");
+	getDataForDayType("7");
+
+	function getDataForDayType (daytype){
+		$.getJSON( '{% url "getdensitydays" %}', {
+			daytype: daytype
+	    }).done(function(data,status,xhr) {
+			  if (status == "success"){
+				  if (data.length>0){
+					  var dataLatLng = [];
+					  for (i = 0; i < data.length; i++) {
+							var dl = data[i];
+							dataLatLng.push(new google.maps.LatLng(dl["LATITUDE"], dl["LONGITUDE"]));
+						}
+					  addHeatMap (dataLatLng, daytype);
+					  
+					}
+				} else {
+				  alert (status);
+			  }
+		  })
+		  .fail(function(object, t, message) {
+	  			alert(t+"\n"+message);
+		});
+	}
+
+	
+
+</script>
+{% endblock content %}

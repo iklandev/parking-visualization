@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+<br />
+<!-- Parking Occurrence  -->
+<div class="row">
+	<div class='col-sm-3'>
+    	<div class="form-group">
+        	<div class='input-group date' id='datetimepicker'>
+            	<input type='text' class="form-control" />
+                 <span class="input-group-addon">
+                 	<span class="glyphicon glyphicon-calendar"></span>
+                 </span>
+                </div>
+            </div>
+        </div>
+	<div class="col-sm-12">
+		<button id="btnAnimation" onclick="startStop()" class="btn btn-default btn-sm" style="margin-bottom: 8px; width:150px;">Start Animation</button> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		<span id="title" style="font-weight: bold; font-size: large;"></span>
+	</div>
+	<div class="col-sm-12">
+		<div id="map" style="height: 500px;"></div>
+	</div>	
+	{{ min }}
+	{{ max }}
+</div>
+<hr />
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDO3vN1CGPR58k_TOLZzrJauDyQ0uTrQY&libraries=visualization"></script>
+<script src='{% static "js/dv-utilities.js" %}' ></script>
+
+<script src='{% static "js/moment.min.js" %}'></script>
+<script src='{% static "js/bootstrap-datetimepicker.js" %}'></script>
+<script>
+$("#btnAnimation").hide();
+
+$(function () {
+    $('#datetimepicker').datetimepicker({
+    	format: 'DD/MM/YYYY'
+    });
+    
+    $('#datetimepicker').data("DateTimePicker").maxDate('{{max}}');
+    $('#datetimepicker').data("DateTimePicker").minDate('{{min}}');
+    
+    $("#datetimepicker").on("dp.change", function(e) {
+    	getParkingsForDate ();
+    });
+    
+});
+
+var map;
+var bermudaCenter = new google.maps.LatLng(32.319290832835364, -64.77584148168944); 
+var bermudaZoom = 12;
+var parkingEventsDay = null;
+var running = false;
+var addedMarkers = [];
+
+	function getParkingsForDate () {
+		var date = $('#datetimepicker').data('date');
+		if (date != undefined){
+			if (parkingEventsDay!=null){
+				parkingEventsDay.ClearMap(addedMarkers);
+				parkingEventsDay = null;
+			}
+			running = false;
+			$("#btnAnimation").hide();
+			$("#btnAnimation").text("Start Animation");
+			$("#title").text("");
+			$.getJSON( '{% url "getparkingsfordate" %}', {
+		        date: date
+		     })
+			.done(function(data,status,xhr) {
+				if (status == "success"){
+					if (data['PARKINGDATA']!=null && data['CONSTRAINTS']!=null){
+						parkingEventsDay = new ParkingEventsDay (data['CONSTRAINTS'].DAYTYPE, data['CONSTRAINTS'].MINHOUR,
+								data['CONSTRAINTS'].MAXHOUR, data['PARKINGDATA']);	
+						$("#btnAnimation").show();
+					} else {
+						alert ("No parking events for selected date");
+					}
+					
+	  			} else {
+		  			alert (status);
+	  			}
+			})
+			.fail(function(object, t, message) {
+	  			alert(t+"\n"+message);
+			});
+		} else {
+			alert("Please select date");
+		}
+	
+	}
+
+	function startStop() {		
+		if (!running) {
+			running = true;
+			if (parkingEventsDay.parkingCounter==0){
+				if (parkingEventsDay!=null){
+					parkingEventsDay.ClearMap(addedMarkers);
+				}
+		}     
+		$("#btnAnimation").text("Pause Animation");
+		nextMinute();
+		
+		} else {
+			$("#btnAnimation").text("Resume Animation");
+			running = false;
+		}
+	}
+	
+	function nextMinute() {
+		
+		if (!running) {
+				return;
+		}
+		
+		$("#title").text(parkingEventsDay.GetDayInfo());
+		parkingEventsDay.RemoveEvents(addedMarkers, parkingEventsDay.day.hour, parkingEventsDay.day.minute);
+		var parkings = parkingEventsDay.GetCurrentParkings();
+		
+		for (i = 0; i < parkings.length; i++) {	
+			 addMinute(parkings[i]['LATITUDE'], parkings[i]['LONGITUDE'],
+					 parkingEventsDay.day.hour, parseInt(parkings[i]['ENDTIME']), parseInt(parkings[i]['ENDMINUTE']));	
+		}
+		
+		if (!parkingEventsDay.hasParkings){
+			running = false;
+			$("#btnAnimation").text("Start Animation");
+			parkingEventsDay.Reset();
+			return;
+		}
+	    setTimeout(nextMinute, CounterTimeout);
+	      
+	}
+		
+	function addMinute(lat, lng, hour, endHour, endMinute) {
+		
+		var location = new google.maps.LatLng(lat, lng);
+
+		var outer = new google.maps.Marker({
+			position: location,
+		    clickable: false,
+		    icon: {
+		    	path: google.maps.SymbolPath.CIRCLE,
+		        fillOpacity: 0.5,
+		        fillColor: 'rgb(255, 0, 0)',
+		        strokeOpacity: 1.0,
+		        strokeColor: 'rgb(255, 0, 0)',
+		        strokeWeight: 1.0,
+		        scale: 0,
+		      },
+		    optimized: false,
+		 	zIndex: 1,
+		    map: map
+		   });
+
+		var inner = new google.maps.Marker({
+			position: location,
+		    clickable: false,
+		    icon: {
+		    	path: google.maps.SymbolPath.CIRCLE,
+		        fillOpacity: 1.0,
+		        fillColor: 'rgb(255, 0, 0)',
+		        strokeWeight: 0,
+		        scale: 0
+		     },
+		     optimized: false,
+		     zIndex: 1
+		   });
+		inner.endHour = endHour;
+		inner.endMinute = endMinute;
+
+		for (var i = 0; i <= 10; i++) {
+			setTimeout(setScale(inner, outer, i / 10), i * 45);
+		}
+	}
+		
+	function setScale(inner, outer, scale) {
+	    return function() {
+	    	if (scale == 1) {
+	        	outer.setMap(null);
+	     	 } else {
+	        	var icono = outer.get('icon');
+	        	icono.strokeOpacity = Math.cos((Math.PI/2) * scale);
+	        	icono.fillOpacity = icono.strokeOpacity * 0.5;
+	        	icono.scale = Math.sin((Math.PI/2) * scale) * 15;
+	        	outer.set('icon', icono);
+
+	        	var iconi = inner.get('icon');
+	        	var newScale = (icono.scale < 2.0 ? 0.0 : 2.0);
+	        	if (iconi.scale != newScale) {
+	          		iconi.scale = 3;
+	          		inner.set('icon', iconi);
+	          	if (!inner.getMap()){ 
+	          		inner.setMap(map);
+	          		addedMarkers.push(inner);
+	          	}
+	        }
+	      }
+	    }
+	  }
+	
+	$("#btnAnimation").mouseup(function(){
+	    $(this).blur();
+	});
+		
+	<!-- Setup the map -->
+	map = new google.maps.Map(document.getElementById('map'), {
+		zoom: bermudaZoom,
+		center: bermudaCenter,
+		mapTypeId: 'roadmap'
+		});
+
+</script>
+{% endblock content %}

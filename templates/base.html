@@ -1,0 +1,101 @@
+{% load staticfiles %}
+{% load i18n %} 
+<!DOCTYPE html>
+<html>
+<head>
+		
+		<link rel="stylesheet" href='{% static "css/bootstrap.min.css" %}' />
+		<link rel="stylesheet" href='{% static "css/bootstrap-datetimepicker.css" %}' />
+		<link rel="stylesheet" href='{% static "css/metisMenu.min.css" %}' />
+		<link rel="stylesheet" href='{% static "css/sb-admin-2.css" %}' />
+		<link rel="stylesheet" href='{% static "css/font-awesome.min.css" %}' />
+		
+		<script src='{% static "js/jquery-3.1.0.min.js" %}'></script>
+		<script src='{% static "js/bootstrap.min.js" %}'></script>
+		<script src='{% static "js/metisMenu.min.js" %}'></script>
+		<script src='{% static "js/sb-admin-2.min.js" %}'></script>
+		<script src='{% static "js/d3.v3.min.js" %}' ></script>
+		
+		<script type="text/javascript">
+			// milliseconds 
+			var CounterTimeout = 100;
+		</script>
+</head>
+<body>
+	
+	{% url "densitydays"  as densitydays %}
+	{% url "pointmapdaysofweek" as pointmapdaysofweek %}
+	{% url "heatmapdaysofweek" as heatmapdaysofweek %}
+	{% url "pointmapdate" as pointmapdate %}
+	{% url "heatmapdate" as heatmapdate %}
+	{% url "reports" as reports %}
+
+	<div id="wrapper">
+	
+		 <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="font-size: 25px;" href='{% url "home" %}'>{% trans "Data Visualization" %}</a>
+            </div>
+            <ul class="nav navbar-top-links navbar-left">
+              <li>
+              		<span class="navbar-brand" style="margin-left: 15px; font-size: 20px; color: #337ab7; font-weight: bold;">{{ page_title }}</span>
+              </li>
+            </ul>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href='{% url "home" %}'><i class="fa fa-bar-chart-o fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li> 
+            				<a href="#"><i class="fa fa-calendar fa-fw"></i> Calendar View<span class="fa arrow"></span></a> 
+            				<ul class="nav nav-second-level"> 
+            					<li><a href='{% url "calendar" %}'>Summary</a></li>
+            					<li><a href='{% url "calendardetail" %}'>Detail</a></li>
+            				</ul> 
+            			</li>
+                        <li>
+                        	<a href='{{ reports }}'><i class="fa fa-th-list fa-fw"></i> Reports</a>
+                        </li>
+                        <li>
+                        	<a href='{{ densitydays }}'><i class="fa fa-road fa-fw"></i> Density</a>
+                        </li>
+                        <li> 
+            				<a href="#"><i class="fa fa-play fa-fw"></i> Animations<span class="fa arrow"></span></a> 
+            				<ul class="nav nav-second-level"> 
+            					<li class="dropdown-header">Grouped by the days of the week</li>
+            					<li><a href='{{ pointmapdaysofweek }}'>Point Map</a></li>
+            					<li><a href='{{ heatmapdaysofweek }}'>Heatmap</a></li>
+            					<li role="separator" class="divider"></li> 
+            					<li class="dropdown-header">Particular date</li>
+            					<li><a href='{{ pointmapdate }}'>Point Map</a></li>
+            					<li><a href='{{ heatmapdate }}'>Heatmap</a></li>
+            				</ul> 
+            			</li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+	
+	</div> 
+	<!-- /#wrapper -->
+	
+	<div id="page-wrapper">
+		{% block content %}
+		{% endblock content %} 
+     </div>       
+	<!-- /#page-wrapper -->
+
+</body>
+</html>

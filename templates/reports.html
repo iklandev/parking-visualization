@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+<br />
+<div class="row">
+<div class="col-sm-6">
+		<select id="reportType" class="form-control" onchange="changeReportSelection()">
+  			<option value="0">-- Select Report --</option>
+  			<option value="1">Parking events distribution</option>
+  			<option value="2">Parking fee distribution</option>
+  			<option value="3">Average duration of parking event</option>
+  			<option value="4">Average cost of parking event</option>
+  			<option value="5">Average duration by day of week and by zone</option>
+  			<option value="6">Average duration by month and by zone</option>
+		</select>
+	</div>
+</div>
+<hr />
+<div class="row">
+	<div class="col-sm-12" id="zoneMapDiv">
+		<div id="map" style="height: 500px;"></div>
+	</div>	
+</div>
+<div class="row">
+	<div class="col-sm-12" id="chartDiv" hidden="true" style="height: 300px;">	
+		<div id = "barDivZones" style="height:100%; width: 70%; float: left;"></div>
+		<div id = "pieDivZones" style="height:100%; width: 20%; float: left;"></div>
+		<div id = "legendDivZones" style="height:100%; width: 10%; float: left;"></div>
+	</div>	
+</div>
+<div class="row">
+	<div class="col-sm-12" id="brushZoomDiv" hidden="true" style="height: 500px;">	
+	</div>	
+</div>
+<link rel="stylesheet" href='{% static "css/d3-chart-theme.css" %}' />
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDO3vN1CGPR58k_TOLZzrJauDyQ0uTrQY&libraries=visualization"></script>
+<script src='{% static "js/dv-utilities.js" %}' ></script>
+<script src='{% static "js/draw-chart-pie.js" %}' ></script>
+<script>
+var map;
+var bermudaCenter = new google.maps.LatLng(32.319290832835364, -64.77584148168944); 
+var bermudaZoom = 12;
+var zones = [];
+var addedCircles = [];
+
+function changeReportSelection () {
+	$("#reportType option[value='0']").remove();
+	if ($("#reportType").val()!= 0){
+		getReport ($("#reportType").val());
+	}
+}
+	
+	function getReport (type){
+		clearMapOverlays(addedCircles);
+		if (type == "5" || type == "6"){
+			$("#zoneMapDiv").hide();
+			$("#brushZoomDiv").hide();
+			$("#chartDiv").show();
+		} else if (type=="7"){
+			$("#zoneMapDiv").hide();
+			$("#chartDiv").hide();
+			$("#brushZoomDiv").show();
+		} else {
+			$("#chartDiv").hide();
+			$("#brushZoomDiv").hide();
+			$("#zoneMapDiv").show();
+		}
+		$.getJSON('{% url "getreport" %}',{
+			type: type
+	     })
+		.done(function(data,status,xhr) {
+			if (status == "success"){	
+				if (type == "5"){
+					drawChartPie ('#barDivZones', '#pieDivZones', '#legendDivZones', 1, data);
+				} else if (type == "6"){
+					drawChartPie ('#barDivZones', '#pieDivZones', '#legendDivZones', 2, data);
+				} else if (type == "7") {
+					drawBrushZoom ('#brushZoomDiv', data);
+				}
+				else {
+					zones = data;
+					showZones ();
+				}
+				}					
+			else {
+				alert (status);
+			}
+		})
+		.fail(function(object, t, message) {
+  			alert(t+"\n"+message);
+		});
+	}
+	
+	<!-- Setup the map -->
+	map = new google.maps.Map(document.getElementById('map'), {
+		zoom: bermudaZoom,
+		center: bermudaCenter,
+		mapTypeId: 'roadmap'
+	});
+	
+</script>
+{% endblock content %}

@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+<br />
+<div class="row">
+<div class="col-sm-6">
+		<select id="dayTypeSelect" class="form-control" onchange="dayChanged()">
+  			<option value="0">-- Select Day of the Week --</option>
+  			<option value="1">Monday</option>
+  			<option value="2">Tuesday</option>
+  			<option value="3">Wednesday</option>
+  			<option value="4">Thursday</option>
+  			<option value="5">Friday</option>
+  			<option value="6">Saturday</option>
+  			<option value="7">Sunday</option>
+		</select>
+	</div>
+</div>
+<br />
+<div class="row">
+	<div class="col-sm-12">
+		<button id="btnAnimation" hidden="true" onclick="startStop()" class="btn btn-default btn-sm" style="margin-bottom: 8px; width:150px;">Start Animation</button> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		<span id="title" style="font-weight: bold; font-size: large;"></span>
+	</div>
+	<div class="col-sm-10">
+		<div id="mapHeat" style="height: 500px;"></div>
+	</div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDO3vN1CGPR58k_TOLZzrJauDyQ0uTrQY&libraries=visualization"></script>
+<script src='{% static "js/dv-utilities.js" %}' ></script>
+<script>
+
+$("#btnAnimation").hide();
+
+var bermudaCenter = new google.maps.LatLng(32.319290832835364, -64.77584148168944); 
+var bermudaZoom = 12;
+var parkingEventsDay = null;
+var mapHeat, heatmap;
+var heatMapData=new google.maps.MVCArray();
+var running = false;
+
+	$("#btnAnimation").mouseup(function(){
+	    $(this).blur();
+	})
+	
+	function startStop() {
+		if (!running) {
+			running = true;
+			if (parkingEventsDay.parkingCounter==0){
+				if (parkingEventsDay!=null){
+					heatMapData = new google.maps.MVCArray();
+					heatmap.setMap(null);
+					heatmap = new google.maps.visualization.HeatmapLayer({
+	    		        map: mapHeat,
+	    		        data: heatMapData,
+	    		        radius: 18,
+	    		      });
+				}
+			} 
+		      $("#btnAnimation").text("Pause Animation");
+		      nextMinute();
+		} else {
+			$("#btnAnimation").text("Resume Animation");
+			running = false;
+		}
+	}
+	
+	function nextMinute() {
+		if (!running) {
+				return;
+		}
+		
+		$("#title").text(parkingEventsDay.GetDayInfo());	
+		parkingEventsDay.RemoveHeatEvents(heatMapData, parkingEventsDay.day.hour, parkingEventsDay.day.minute);
+		var parkings = parkingEventsDay.GetCurrentParkings();
+				
+		for (i = 0; i < parkings.length; i++) {	
+			var inner = new google.maps.LatLng(parkings[i]['LATITUDE'], parkings[i]['LONGITUDE']);  
+			inner.endHour = parseInt(parkings[i]['ENDTIME']);
+			inner.endMinute = parseInt(parkings[i]['ENDMINUTE']);
+			heatMapData.push(inner);
+		}
+		
+		if (!parkingEventsDay.hasParkings){
+			running = false;
+			$("#btnAnimation").text("Start Animation");
+			parkingEventsDay.Reset();
+			return;
+		}
+		
+	    setTimeout(nextMinute, CounterTimeout);	     
+	}
+	
+	
+
+	function getZoomAndCenter () {
+		var c = map.getCenter();
+		console.log("Center Lat: "+c.lat()+"; Center Lng: "+c.lng());
+		alert("Zoom: "+map.getZoom()+"; Center Lat: "+c.lat()+"; Center Lng: "+c.lng());
+	}
+	
+	function dayChanged() {
+		if (parkingEventsDay!=null){
+			heatMapData = new google.maps.MVCArray();
+			heatmap.setMap(null);
+			heatmap = new google.maps.visualization.HeatmapLayer({
+		        map: mapHeat,
+		        data: heatMapData,
+		        radius: 18,
+		      });
+			parkingEventsDay = null;
+		}
+		running = false;
+		$("#btnAnimation").hide();
+		$("#btnAnimation").text("Start Animation");
+		$("#title").text("");
+		$("#dayTypeSelect option[value='0']").remove();
+		if ($("#dayTypeSelect").val()!= 0){
+			$.getJSON( '{% url "getanimation" %}',{
+				daytype: $("#dayTypeSelect").val()
+		    })
+			.done(function(data, status, xhr) {
+				if (status == "success"){
+					if (data['PARKINGDATA']!=null){
+					parkingEventsDay = new ParkingEventsDay ($("#dayTypeSelect").val(), data['CONSTRAINTS'].MINHOUR,
+							data['CONSTRAINTS'].MAXHOUR, data['PARKINGDATA']);	
+					$("#btnAnimation").show();
+					} else {
+						alert ("No parking events for selected day")
+					}
+	  			} else {
+		  			alert (status);
+	  			}
+			})
+			.fail(function(object, t, message) {
+	  			alert(t+"\n"+message);
+			});
+		}
+	}
+	
+	<!-- Setup the heat map -->
+	mapHeat = new google.maps.Map(document.getElementById('mapHeat'), {
+		zoom: bermudaZoom,
+		center: bermudaCenter,
+		mapTypeId: 'satellite'
+		});
+	
+	heatmap = new google.maps.visualization.HeatmapLayer({
+        map: mapHeat,
+        data: heatMapData,
+        radius: 18,
+      });
+
+</script>
+{% endblock content %}

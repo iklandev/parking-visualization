@@ -1,0 +1,5 @@
+- Puython 2.7 (Django framework) as back-end
+- Bermuda Lat: 32.2934....		Long:-64.7775...
+- D3 wiil be used for visulation
+
+Google JS API MAp; AIzaSyDDO3vN1CGPR58k_TOLZzrJauDyQ0uTrQY 

@@ -1,0 +1,30 @@
+﻿
+1. Install Python 2.7 (After install add to PATH)
+
+2. Install virtualenv and virtualenvwrapper which provide a dedicated environment for each Django project you create. 
+   This will allow you to create VIRTUAL ENVIROMENT where PYTHON will be copy and
+   DJANGO will be downloaded. With this option your PYTHON installation on Windows will be unchanged.
+   
+   Commad to install virtualenv:
+   $ pip install virtualenvwrapper-win
+   
+   Then create a virtual environment for your project:
+   $ mkvirtualenv myproject
+
+
+   The virtual environment will be activated automatically and you’ll see “(myproject)” next to the command prompt to designate that.
+   If you start a new command prompt, you’ll need to activate the environment again using:
+   $ workon myproject
+   
+3. Install Django for your virtual enviroment
+   In the command prompt, ensure your virtual environment is active, and execute the following command:
+   $ pip install django
+   
+   To verfiy that Django is installed type (if is everything OK command will return Django version that is installed):
+   $ django-admin --version
+   
+4. Install Python libraries required for data analysis in the virtual enviroment:
+   $ pip install numpy
+   $ pip install 
+   
+5. In eclipse set the path to Python intpreter to be to python that is installed in virtual enviroment

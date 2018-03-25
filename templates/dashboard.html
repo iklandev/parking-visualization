@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load i18n %} 
+
+{% block content %}
+<br />
+<!-- Summary Row -->
+<div class="row">
+	<!--Earned Money -->
+	<div class="col-lg-3 col-md-6">
+    	<div class="panel panel-primary">
+        	<div class="panel-heading">
+            	<div class="row">
+                	<div class="col-xs-3">
+                    	<i class="fa fa-dollar fa-4x"></i>
+                   	</div>
+                    <div class="col-xs-9 text-right">
+                    	<div class="huge">{{ FEES }}</div>
+                        <div>{% trans "Total Parking Fee" %}</div>
+                    </div>
+          		</div>
+          	</div>
+     	</div>
+	</div>
+	<!-- End Earned Money -->
+	<!--Total Events -->
+	<div class="col-lg-3 col-md-6">
+    	<div class="panel panel-green">
+        	<div class="panel-heading">
+            	<div class="row">
+                	<div class="col-xs-3">
+                    	<i class="fa fa-automobile fa-4x"></i>
+                   	</div>
+                    <div class="col-xs-9 text-right">
+                    	<div class="huge">{{ EVENTS }}</div>
+                        <div>{% trans "Total Parking Events"%}</div>
+                    </div>
+          		</div>
+          	</div>
+     	</div>
+	</div>
+	<!-- End Total Events -->
+	<!--Total Clients -->
+	<div class="col-lg-3 col-md-6">
+    	<div class="panel panel-yellow">
+        	<div class="panel-heading">
+            	<div class="row">
+                	<div class="col-xs-3">
+                    	<i class="fa  fa-group fa-4x"></i>
+                   	</div>
+                    <div class="col-xs-9 text-right">
+                    	<div class="huge">{{ CLIENTS }}</div>
+                        <div>{% trans "Total Users"%}</div>
+                    </div>
+          		</div>
+          	</div>
+     	</div>
+	</div>
+	<!-- End Total Clients -->
+	<!--Total Zones -->
+	<div class="col-lg-3 col-md-6">
+    	<div class="panel panel-red">
+        	<div class="panel-heading">
+            	<div class="row">
+                	<div class="col-xs-3">
+                    	<i class="fa fa-road fa-4x"></i>
+                   	</div>
+                    <div class="col-xs-9 text-right">
+                    	<div class="huge">{{ ZONES }}</div>
+                        <div>{% trans "Parking Zones"%}</div>
+                    </div>
+          		</div>
+          	</div>
+     	</div>
+	</div>
+	<!-- End Total Zones -->
+</div>
+<!-- End Summary Row -->
+
+<!-- Trend Row -->
+<div class="row">
+	<!-- Fee Trend -->
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">{% trans "Parking Fee Trend"%}</div>
+			<ul class="list-group">
+  				<li class="list-group-item" id="feeLastDayTrend">
+  					<table style="width: 100%">
+  						<tbody>
+  							<tr>
+  								<td>{% trans "Last Day"%}</td>
+  								<td style="text-align: right;" class="showTrendValue"></td>
+  							</tr>
+  						</tbody>
+  					</table>
+  				</li>
+  				<li class="list-group-item" id="feeLast7DaysTrend">
+  					<table style="width: 100%">
+  						<tbody>
+  							<tr>
+  								<td>{% trans "Last 7 Days"%}</td>
+  								<td style="text-align: right;" class="showTrendValue"></td>
+  							</tr>
+  						</tbody>
+  					</table>
+  				</li>
+  				<li class="list-group-item" id="feeLastMonthTrend">
+  					<table style="width: 100%">
+  						<tbody>
+  							<tr>
+  								<td>{% trans "Last Month"%}</td>
+  								<td style="text-align: right;" class="showTrendValue"></td>
+  							</tr>
+  						</tbody>
+  					</table>
+  				</li>
+			</ul>
+    	</div>
+	</div>
+	<!-- End Fee Trend -->
+	<!-- Number Of Events Trend -->
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">{% trans "Number of Events Trend"%}</div>
+      		<ul class="list-group">
+  				<li class="list-group-item" id="eventsLastDayTrend">
+  					<table style="width: 100%">
+  						<tbody>
+  							<tr>
+  								<td>{% trans "Last Day"%}</td>
+  								<td style="text-align: right;" class="showTrendValue"></td>
+  							</tr>
+  						</tbody>
+  					</table>
+  				</li>
+  				<li class="list-group-item" id="eventsLast7DaysTrend">
+  					<table style="width: 100%">
+  						<tbody>
+  							<tr>
+  								<td>{% trans "Last 7 Days"%}</td>
+  								<td style="text-align: right;" class="showTrendValue"></td>
+  							</tr>
+  						</tbody>
+  					</table>
+  				</li>
+  				<li class="list-group-item" id="eventsLastMonthTrend">
+  					<table style="width: 100%">
+  						<tbody>
+  							<tr>
+  								<td>{% trans "Last Month"%}</td>
+  								<td style="text-align: right;" class="showTrendValue"></td>
+  							</tr>
+  						</tbody>
+  					</table>
+  				</li>
+			</ul>
+		</div>
+ 	</div>
+ 	<!-- End Number Of Events Trend -->
+</div>
+<!-- End Trend Row -->
+
+
+<!-- Last Seven Days Row -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+        	<div class="panel-heading">
+            	{% trans "Occupancy in Last 7 Days"%}
+             </div>
+             <div class="panel-body" id="lastSevenDaysID" style="height: 380px;">
+             </div>           
+        </div>
+	</div>
+</div>       
+<!-- End Last Seven Days -->
+
+<link rel="stylesheet" href='{% static "css/d3-horizontal-bar-chart.css" %}' />
+<link rel="stylesheet" href='{% static "css/d3-day-hour-calendar-theme.css" %}' />
+<script src='{% static "js/draw-horizontal-bar-chart.js" %}' ></script>
+<script src='{% static "js/draw-day-hour-calendar.js" %}' ></script>
+<script>
+
+function setupTheTrendRow (listItemID, value){
+	
+	var clsString="";
+	var valueString="";
+	if (value > 0){
+		clsString = "list-group-item-success";
+		valueString ="<i class='fa fa-arrow-circle-up'></i> "+value+"%";
+	} else if (value < 0) {
+		clsString = "list-group-item-danger";
+		valueString ="<i class='fa fa-arrow-circle-down'></i> "+value+"%";
+	} else {
+		clsString = "list-group-item-info";
+		valueString = value+"%"
+	}
+	
+	$(listItemID).addClass(clsString);
+	$(listItemID+" .showTrendValue").append(valueString);
+	
+}
+
+
+	//Get info for the last seven days
+	$.getJSON('{% url "geteventslastsevendays" %}').done(
+			function(data, status, xhr) {
+				if (status == "success") {
+					if (data != null) {
+						drawDayHourCalendar("#lastSevenDaysID", data);
+					}
+				} else {
+					alert(status);
+				}
+			}).fail(function(object, t, message) {
+		alert(t + "\n" + message);
+	});
+
+	//Get parking trend
+	$.getJSON('{% url "getparkingtrend" %}').done(
+			function(data, status, xhr) {
+				if (status == "success") {
+					if (data != null) {
+						setupTheTrendRow("#feeLastDayTrend",
+								data.DAY.INCREASE_FEE);
+						setupTheTrendRow("#feeLast7DaysTrend",
+								data.SEVEN_DAYS.INCREASE_FEE);
+						setupTheTrendRow("#feeLastMonthTrend",
+								data.MONTH.INCREASE_FEE);
+
+						setupTheTrendRow("#eventsLastDayTrend",
+								data.DAY.INCREASE_EVENTS);
+						setupTheTrendRow("#eventsLast7DaysTrend",
+								data.SEVEN_DAYS.INCREASE_EVENTS);
+						setupTheTrendRow("#eventsLastMonthTrend",
+								data.MONTH.INCREASE_EVENTS);
+					}
+				} else {
+					alert(status);
+				}
+			}).fail(function(object, t, message) {
+		alert(t + "\n" + message);
+	});
+
+</script>
+{% endblock content %}
