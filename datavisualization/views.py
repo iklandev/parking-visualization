@@ -7,12 +7,18 @@ from django.http import JsonResponse
 from . import util
 from . import datautil
 from django.utils import translation
-
+from django.utils.translation import activate
 
 
 # Create your views here.
 
+def activate_language():
+    #activate('mk');
+    return;
+    
+
 def home(request):
+    activate_language();
     dict_result = {'page_title' : _("Dashboard")};
     dict_summary = datautil.data_summary();
     dict_result['EVENTS'] = dict_summary['EVENTS'];
@@ -23,6 +29,7 @@ def home(request):
     return render (request,"dashboard.html", dict_result);
 
 def calendardetail(request):  
+    activate_language();
     zones = util.get_zones();
     zones = zones.sort_values('NAME', ascending=True);
     zones_list=[];  
@@ -35,27 +42,34 @@ def calendardetail(request):
             
     return render (request, "calendardetail.html", dict_result);
 
-def calendar(request):        
+def calendar(request):    
+    activate_language();    
     return render (request, "calendar.html", {'page_title' : _("Calendar View")})
 
 def densitydays(request):
+    activate_language();
     return render (request, "densitydays.html", {'page_title' : _("Parking density by day of the week")})
 
 def pointmapdaysofweek(request):
+    activate_language();
     return render (request, "pointmapdaysofweek.html", {'page_title' : _("Animation")})
 
 def heatmapdaysofweek(request):
+    activate_language();
     return render (request, "heatmapdaysofweek.html", {'page_title' : _("Heatmap")})
 
 def pointmapdate(request):
+    activate_language();
     dict_result = datautil.get_min_max_date();
     dict_result['page_title'] = _("Animation");
     return render (request, "pointmapdate.html", dict_result)
 
 def heatmapdate(request):
+    activate_language();
     dict_result = datautil.get_min_max_date();
     dict_result['page_title'] = _("Heatmap");
     return render (request, "heatmapdate.html", dict_result)
 
-def reports(request):        
+def reports(request): 
+    activate_language();       
     return render (request, "reports.html", {'page_title' : _("Reports")})

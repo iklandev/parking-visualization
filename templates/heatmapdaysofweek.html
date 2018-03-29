@@ -7,21 +7,21 @@
 <div class="row">
 <div class="col-sm-6">
 		<select id="dayTypeSelect" class="form-control" onchange="dayChanged()">
-  			<option value="0">-- Select Day of the Week --</option>
-  			<option value="1">Monday</option>
-  			<option value="2">Tuesday</option>
-  			<option value="3">Wednesday</option>
-  			<option value="4">Thursday</option>
-  			<option value="5">Friday</option>
-  			<option value="6">Saturday</option>
-  			<option value="7">Sunday</option>
+  			<option value="0">-- {% trans  "Select Day of the Week" %} --</option>
+  			<option value="1">{% trans  "Monday" %}</option>
+  			<option value="2">{% trans  "Tuesday" %}</option>
+  			<option value="3">{% trans  "Wednesday" %}</option>
+  			<option value="4">{% trans  "Thursday" %}</option>
+  			<option value="5">{% trans  "Friday" %}</option>
+  			<option value="6">{% trans  "Saturday" %}</option>
+  			<option value="7">{% trans  "Sunday" %}</option>
 		</select>
 	</div>
 </div>
 <br />
 <div class="row">
 	<div class="col-sm-12">
-		<button id="btnAnimation" hidden="true" onclick="startStop()" class="btn btn-default btn-sm" style="margin-bottom: 8px; width:150px;">Start Animation</button> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		<button id="btnAnimation" hidden="true" onclick="startStop()" class="btn btn-default btn-sm" style="margin-bottom: 8px; width:150px;">{% trans  "Start Animation</button> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 		<span id="title" style="font-weight: bold; font-size: large;"></span>
 	</div>
 	<div class="col-sm-10">

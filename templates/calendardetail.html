@@ -7,7 +7,7 @@
 <div class="row">
 	<div class="col-sm-6">
 		<select id="zoneSelect" class="form-control" onchange="zoneChanged()">
-  			<option value="0">-- Select Parking Zone --</option>
+  			<option value="0">-- {% trans  "Select Parking Zone" %} --</option>
   			{% for zone in ZONES %}
 				<option value="{{ zone.ID }}">{{ zone.NAME }}</option>
 			{% endfor %}

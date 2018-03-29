@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-03 19:33+0200\n"
+"POT-Creation-Date: 2018-03-29 23:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,74 +17,188 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
 
-#: .\datavisualization\views.py:16
+#: .\datavisualization\views.py:22 .\templates\base.html:57
 msgid "Dashboard"
-msgstr "Табла"
+msgstr ""
 
-#: .\datavisualization\views.py:34
+#: .\datavisualization\views.py:41
 msgid "Calendar Detail"
-msgstr "Календар преглед"
+msgstr ""
 
-#: .\datavisualization\views.py:39
+#: .\datavisualization\views.py:47 .\templates\base.html:60
 msgid "Calendar View"
-msgstr "Календар преглед"
+msgstr ""
 
-#: .\datavisualization\views.py:42
+#: .\datavisualization\views.py:51
 msgid "Parking density by day of the week"
-msgstr "Паркинг густина од денот на неделата"
+msgstr ""
 
-#: .\datavisualization\views.py:45 .\datavisualization\views.py:52
+#: .\datavisualization\views.py:55 .\datavisualization\views.py:64
 msgid "Animation"
-msgstr "Анимација"
+msgstr ""
 
-#: .\datavisualization\views.py:48 .\datavisualization\views.py:57
+#: .\datavisualization\views.py:59 .\datavisualization\views.py:70
+#: .\templates\base.html:77 .\templates\base.html:81
 msgid "Heatmap"
-msgstr "Хитмап"
+msgstr ""
 
-#: .\datavisualization\views.py:61
+#: .\datavisualization\views.py:75 .\templates\base.html:67
 msgid "Reports"
-msgstr "Репорти"
+msgstr ""
 
 #: .\templates\base.html:44
 msgid "Data Visualization"
-msgstr "Визуелизација"
+msgstr ""
+
+#: .\templates\base.html:62
+msgid "Summary"
+msgstr ""
+
+#: .\templates\base.html:63
+msgid "Detail"
+msgstr ""
+
+#: .\templates\base.html:70
+msgid "Density"
+msgstr ""
+
+#: .\templates\base.html:73
+msgid "Animations"
+msgstr ""
+
+#: .\templates\base.html:75
+msgid "Grouped by the days of the week"
+msgstr ""
+
+#: .\templates\base.html:76 .\templates\base.html:80
+msgid "Point Map"
+msgstr ""
+
+#: .\templates\base.html:79
+msgid "Particular date"
+msgstr ""
+
+#: .\templates\calendar.html:10
+msgid "Number of Events"
+msgstr ""
+
+#: .\templates\calendar.html:13
+msgid "Parking Fee"
+msgstr ""
+
+#: .\templates\calendardetail.html:10
+msgid "Select Parking Zone"
+msgstr ""
 
 #: .\templates\dashboard.html:19
 msgid "Total Parking Fee"
-msgstr "Вкупна заработка"
+msgstr ""
 
 #: .\templates\dashboard.html:36
 msgid "Total Parking Events"
-msgstr "Вкупен број на паркинг настани"
+msgstr ""
 
 #: .\templates\dashboard.html:53
 msgid "Total Users"
-msgstr "Вкупен број на корисници"
+msgstr ""
 
 #: .\templates\dashboard.html:70
 msgid "Parking Zones"
-msgstr "Број на паркинг зони"
+msgstr ""
 
 #: .\templates\dashboard.html:85
 msgid "Parking Fee Trend"
-msgstr "Тренд на заработка"
+msgstr ""
 
 #: .\templates\dashboard.html:91 .\templates\dashboard.html:130
 msgid "Last Day"
-msgstr "Последниот ден"
+msgstr ""
 
 #: .\templates\dashboard.html:101 .\templates\dashboard.html:140
 msgid "Last 7 Days"
-msgstr "Последните 7 дена"
+msgstr ""
 
 #: .\templates\dashboard.html:111 .\templates\dashboard.html:150
 msgid "Last Month"
-msgstr "Последниот месец"
+msgstr ""
 
 #: .\templates\dashboard.html:124
-msgid "Number of Events Trend"
-msgstr "Тренд на паркинг настани"
+msgid "Number Of Events Trend"
+msgstr ""
 
 #: .\templates\dashboard.html:169
 msgid "Occupancy in Last 7 Days"
-msgstr "Број на паркинг настани во последните 7 дена"
+msgstr ""
+
+#: .\templates\densitydays.html:7 .\templates\heatmapdaysofweek.html:11
+#: .\templates\pointmapdaysofweek.html:11
+msgid "Monday"
+msgstr ""
+
+#: .\templates\densitydays.html:8 .\templates\heatmapdaysofweek.html:12
+#: .\templates\pointmapdaysofweek.html:12
+msgid "Tuesday"
+msgstr ""
+
+#: .\templates\densitydays.html:24 .\templates\heatmapdaysofweek.html:13
+#: .\templates\pointmapdaysofweek.html:13
+msgid "Wednesday"
+msgstr ""
+
+#: .\templates\densitydays.html:25 .\templates\heatmapdaysofweek.html:14
+#: .\templates\pointmapdaysofweek.html:14
+msgid "Thursday"
+msgstr ""
+
+#: .\templates\densitydays.html:41 .\templates\heatmapdaysofweek.html:15
+#: .\templates\pointmapdaysofweek.html:15
+msgid "Friday"
+msgstr ""
+
+#: .\templates\densitydays.html:42 .\templates\heatmapdaysofweek.html:16
+#: .\templates\pointmapdaysofweek.html:16
+msgid "Saturday"
+msgstr ""
+
+#: .\templates\densitydays.html:58 .\templates\heatmapdaysofweek.html:17
+#: .\templates\pointmapdaysofweek.html:17
+msgid "Sunday"
+msgstr ""
+
+#: .\templates\heatmapdate.html:20 .\templates\pointmapdate.html:20
+#: .\templates\pointmapdaysofweek.html:25
+msgid "Start Animation"
+msgstr ""
+
+#: .\templates\heatmapdaysofweek.html:10
+#: .\templates\pointmapdaysofweek.html:10
+msgid "Select Day of the Week"
+msgstr ""
+
+#: .\templates\reports.html:10
+msgid "Select Report"
+msgstr ""
+
+#: .\templates\reports.html:11
+msgid "Parking events distribution"
+msgstr ""
+
+#: .\templates\reports.html:12
+msgid "Parking fee distribution"
+msgstr ""
+
+#: .\templates\reports.html:13
+msgid "Average duration of parking event"
+msgstr ""
+
+#: .\templates\reports.html:14
+msgid "Average cost of parking event"
+msgstr ""
+
+#: .\templates\reports.html:15
+msgid "Average duration by day of week and by zone"
+msgstr ""
+
+#: .\templates\reports.html:16
+msgid "Average duration by month and by zone"
+msgstr ""

@@ -7,13 +7,13 @@
 <div class="row">
 <div class="col-sm-6">
 		<select id="reportType" class="form-control" onchange="changeReportSelection()">
-  			<option value="0">-- Select Report --</option>
-  			<option value="1">Parking events distribution</option>
-  			<option value="2">Parking fee distribution</option>
-  			<option value="3">Average duration of parking event</option>
-  			<option value="4">Average cost of parking event</option>
-  			<option value="5">Average duration by day of week and by zone</option>
-  			<option value="6">Average duration by month and by zone</option>
+  			<option value="0">-- {% trans  "Select Report" %} --</option>
+  			<option value="1">{% trans  "Parking events distribution" %}</option>
+  			<option value="2">{% trans  "Parking fee distribution" %}</option>
+  			<option value="3">{% trans  "Average duration of parking event" %}</option>
+  			<option value="4">{% trans  "Average cost of parking event" %}</option>
+  			<option value="5">{% trans  "Average duration by day of week and by zone" %}</option>
+  			<option value="6">{% trans  "Average duration by month and by zone" %}</option>
 		</select>
 	</div>
 </div>
