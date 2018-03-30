@@ -13,7 +13,7 @@ from django.utils.translation import activate
 # Create your views here.
 
 def activate_language():
-    #activate('mk');
+    activate('mk');
     return;
     
 
