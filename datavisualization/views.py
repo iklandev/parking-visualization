@@ -7,13 +7,12 @@ from django.http import JsonResponse
 from . import util
 from . import datautil
 from django.utils import translation
-from django.utils.translation import activate
 
 
 # Create your views here.
 
 def activate_language():
-    activate('mk');
+    util.activate_language();
     return;
     
 

@@ -1,2 +1,7 @@
 eclipse.preferences.version=1
+encoding//datavisualization/datautil.py=UTF-8
 encoding//locale/mk/LC_MESSAGES/django.po=UTF-8
+encoding//templates/heatmapdate.html=UTF-8
+encoding//templates/heatmapdaysofweek.html=UTF-8
+encoding//templates/pointmapdate.html=UTF-8
+encoding//templates/pointmapdaysofweek.html=UTF-8

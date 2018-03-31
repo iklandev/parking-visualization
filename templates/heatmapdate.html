@@ -17,7 +17,7 @@
             </div>
         </div>
 	<div class="col-sm-12">
-		<button id="btnAnimation" onclick="startStop()" class="btn btn-default btn-sm" style="margin-bottom: 8px; width:150px;">{% trans  "Start Animation" %}</button> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		<button id="btnAnimation" onclick="startStop()" class="btn btn-default btn-sm" style="margin-bottom: 8px; width:175px;">Започни Aнимација</button> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 		<span id="title" style="font-weight: bold; font-size: large;"></span>
 	</div>
 	<div class="col-sm-12">
@@ -74,7 +74,8 @@ var heatMapData=new google.maps.MVCArray();
 			}
 			running = false;
 			$("#btnAnimation").hide();
-			$("#btnAnimation").text("Start Animation");
+			//$("#btnAnimation").text("Start Animation");
+			$("#btnAnimation").text("Започни Aнимација");
 			$("#title").text("");
 			$.getJSON( '{% url "getparkingsfordate" %}', {
 		        date: date
@@ -117,10 +118,13 @@ var heatMapData=new google.maps.MVCArray();
 	    		      });
 				}
 			} 
-		      $("#btnAnimation").text("Pause Animation");
+		      //$("#btnAnimation").text("Pause Animation");
+		      $("#btnAnimation").text("Паузирај Анимација");
+		      
 		      nextMinute();
 		} else {
-			$("#btnAnimation").text("Resume Animation");
+			//$("#btnAnimation").text("Resume Animation");
+			$("#btnAnimation").text("Продолжи со анимацијата");
 			running = false;
 		}
 	}
@@ -144,7 +148,8 @@ var heatMapData=new google.maps.MVCArray();
 		
 		if (!parkingEventsDay.hasParkings){
 			running = false;
-			$("#btnAnimation").text("Start Animation");
+			//$("#btnAnimation").text("Start Animation");
+			$("#btnAnimation").text("Започни Aнимација");
 			parkingEventsDay.Reset();
 			return;
 		}

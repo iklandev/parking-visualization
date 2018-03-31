@@ -31,7 +31,8 @@ function Day (minHour, maxHour) {
 function ParkingEventsDay (dayType, minHour, maxHour, parkings) {
 	
 	this.dayType = dayType
-	this.dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+	//this.dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+	this.dayNames = ["Понеделник", "Вторник", "Среда", "Четврток", "Петок", "Сабота", "Недела"];
 	this.day = new Day (minHour, maxHour);
 	
 	this.parkingCounter = 0;
@@ -39,7 +40,7 @@ function ParkingEventsDay (dayType, minHour, maxHour, parkings) {
 	this.hasParkings = true;
 	
 	this.GetDayInfo = function() {
-    	return ""+this.dayNames[this.dayType-1]+";   Time: "+this.day.hour+":"+
+		return ""+this.dayNames[this.dayType-1]+";	 "+this.day.hour+":"+
 		(this.day.minute<=9 ? "0"+this.day.minute : this.day.minute);
     };
 	
@@ -150,10 +151,13 @@ function showZones () {
 				addedCircles.push(cityCircle);
 			
 				var info = [];
-				info.push({name:"City", value:zone['CITY']});
+				/*info.push({name:"City", value:zone['CITY']});
 				info.push({name:"Zone name", value:zone['NAME']});
 				info.push({name:"Zone number", value:zone['ZONENUMBER']});
-				info.push({name:"Long name", value:zone['LONGNAME']});
+				info.push({name:"Long name", value:zone['LONGNAME']});*/
+				
+				info.push({name:"Град", value:zone['CITY']});
+				info.push({name:"Паркинг Зона", value:zone['NAME']});
 				attachInfoWindow (cityCircle, myLatlng, 
 						info, getReportTitleAndValue($("#reportType").val(), 
 								record['VALUE'], record['RANK'], record['PERCENTAGE'],
@@ -167,7 +171,8 @@ function showZones () {
 
 function attachInfoWindow (circle, center, arrayInfo, titleInfo) {
 	
-	var infoString = "<b>"+titleInfo+"</b><hr /><b>Parking Zone Info</b><br /><br />"
+	//var infoString = "<b>"+titleInfo+"</b><hr /><b>Parking Zone Info</b><br /><br />"
+	var infoString = "<b>"+titleInfo+"</b><hr /><b>Информации за паркинг зона</b><br /><br />"
 	
 	if (arrayInfo!=null && arrayInfo.length>0){
 		for (j=0;j<arrayInfo.length;j++){
@@ -190,26 +195,38 @@ function getReportTitleAndValue (reportType, value, rank, percentage,totalRecord
 	titleInfo = "";
 	switch (reportType) {
 	case "1":
-		titleInfo = "Parking events distribution <br />";
+		/*titleInfo = "Parking events distribution <br />";
 		titleInfo+= "Percentage from all events in this zone: "+percentage+"% <br />"
-		titleInfo+= "Rank: "+rank+"/"+totalRecords;
+		titleInfo+= "Rank: "+rank+"/"+totalRecords;*/
+		titleInfo = "Распределба на паркинг настани <br />";
+		titleInfo+= "Процент од сите паркинг настани: "+percentage+"% <br />"
+		titleInfo+= "Ранк: "+rank+"/"+totalRecords;
 		break;
 		
 	case "2":
-		titleInfo = "Earned money distribution <br />";
+		/*titleInfo = "Earned money distribution <br />";
 		titleInfo+= "Percentage from all earned money in this zone: "+percentage+"% <br />"
-		titleInfo+= "Rank: "+rank+"/"+totalRecords;
+		titleInfo+= "Rank: "+rank+"/"+totalRecords;*/
+		titleInfo = "Распределба на заработувачка <br />";
+		titleInfo+= "Процент од заработувачката: "+percentage+"% <br />"
+		titleInfo+= "Ранк: "+rank+"/"+totalRecords;
 		break;
 	
 	case "3":
-		titleInfo = "Average duration <br />";
+		/*titleInfo = "Average duration <br />";
 		titleInfo+= "Average duration for the event: "+value+" minutes <br />"
-		titleInfo+= "Rank: "+rank+"/"+totalRecords;
+		titleInfo+= "Rank: "+rank+"/"+totalRecords;*/
+		titleInfo = "Просечно времетраење <br />";
+		titleInfo+= "Просечно времетраење на паркинг настан: "+value+" минути <br />"
+		titleInfo+= "Ранк: "+rank+"/"+totalRecords;
 		break;
 	case "4":
-		titleInfo = "Average cost <br />";
+		/*titleInfo = "Average cost <br />";
 		titleInfo+= "Average cost for the event: $"+value+" <br />"
-		titleInfo+= "Rank: "+rank+"/"+totalRecords;
+		titleInfo+= "Rank: "+rank+"/"+totalRecords;*/
+		titleInfo = "Просечна цена <br />";
+		titleInfo+= "Просечна цена на паркинг настан: $"+value+" <br />"
+		titleInfo+= "Ранк: "+rank+"/"+totalRecords;
 		break;
 
 	default:

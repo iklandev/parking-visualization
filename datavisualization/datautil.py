@@ -4,6 +4,7 @@ from . import util
 from datetime import datetime, timedelta
 from pandas.core.frame import DataFrame
 from dateutil.relativedelta import relativedelta
+from django.utils.translation import ugettext as _
     
 def data_summary():
     #Get all records
@@ -246,6 +247,7 @@ def parking_events_last_seven_days(date):
 
 def no_events_day_of_week_by_zone_and_hour(zone_id):
     
+    util.activate_language();
     parkings = util.create_data_frame(settings.CSV_EVENTS_FLIE_PATH, ['STARTTIME', 'ZONEID', 'DAYTYPE']);
     parkings = parkings.loc[parkings['ZONEID'] == zone_id];
     parkings.drop('ZONEID', axis=1, inplace=True);
@@ -260,4 +262,4 @@ def no_events_day_of_week_by_zone_and_hour(zone_id):
             events = group.loc[group['STARTTIME']==hour];
             result.append({'DAY':str(name), 'HOUR':int(hour), 'EVENTS':int(events.shape[0])});  
                             
-    return {'DATA':result, 'DAYS':["1", "2", "3", "4", "5", "6", "7"], 'DAYS_LABEL':["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]};
+    return {'DATA':result, 'DAYS':["1", "2", "3", "4", "5", "6", "7"], 'DAYS_LABEL':[_("Mon"), _("Tue"), _("Wed"), _("Thur"), _("Fri"), _("Sat"), _("Sun")]};

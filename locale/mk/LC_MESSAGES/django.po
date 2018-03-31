@@ -202,3 +202,24 @@ msgstr "Просечно времетраење на паркинг настан
 #: .\templates\reports.html:16
 msgid "Average duration by month and by zone"
 msgstr "Просечно времетраење на паркинг настан по месец и по паркинг зона"
+
+msgid "Mon"
+msgstr "Пон"
+
+msgid "Tue"
+msgstr "Вто"
+
+msgid "Wed"
+msgstr "Сре"
+
+msgid "Thur"
+msgstr "Чет"
+
+msgid "Fri"
+msgstr "Пет"
+
+msgid "Sat"
+msgstr "Саб"
+
+msgid "Sun"
+msgstr "Нед"

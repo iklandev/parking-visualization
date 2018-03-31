@@ -28,7 +28,7 @@ function drawChartPie(barId, pieId, legendId, groupType, fData){
 	
 	function mapDayLegend(c){
 	
-		if (groupType == 1){
+		/*if (groupType == 1){
 			return {
 				1 :"MON",
 				2 :"TUE",
@@ -50,7 +50,31 @@ function drawChartPie(barId, pieId, legendId, groupType, fData){
 				9 :"SEP",
 				10 :"OCT",
 				11 :"NOV",
-				12 :"DEC"}[c];}
+				12 :"DEC"}[c];}*/
+		
+		if (groupType == 1){
+			return {
+				1 :"ПОН",
+				2 :"ВТО",
+				3 :"СРЕ",
+				4 :"ЧЕТ",
+				5 :"ПЕТ",
+				6 :"САБ",
+				7 :"НЕД"}[c];}
+		else {
+			return {
+				1 :"ЈАН",
+				2 :"ФЕБ",
+				3 :"МАР",
+				4 :"АПР",
+				5 :"МАЈ",
+				6 :"ЈУН",
+				7 :"ЈУЛ",
+				8 :"АВГ",
+				9 :"СЕП",
+				10 :"ОКТ",
+				11 :"НОВ",
+				12 :"ДЕК"}[c];}
 	}
 	//function segColor(c){ return {low:"#807dba", mid:"#e08214",high:"#41ab5d"}[c]; }
 

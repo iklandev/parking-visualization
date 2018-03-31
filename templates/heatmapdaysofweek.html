@@ -21,7 +21,7 @@
 <br />
 <div class="row">
 	<div class="col-sm-12">
-		<button id="btnAnimation" hidden="true" onclick="startStop()" class="btn btn-default btn-sm" style="margin-bottom: 8px; width:150px;">{% trans  "Start Animation</button> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		<button id="btnAnimation" hidden="true" onclick="startStop()" class="btn btn-default btn-sm" style="margin-bottom: 8px; width:175px;">Започни Aнимација</button> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 		<span id="title" style="font-weight: bold; font-size: large;"></span>
 	</div>
 	<div class="col-sm-10">
@@ -60,10 +60,12 @@ var running = false;
 	    		      });
 				}
 			} 
-		      $("#btnAnimation").text("Pause Animation");
+			//$("#btnAnimation").text("Pause Animation");
+		      $("#btnAnimation").text("Паузирај Анимација");
 		      nextMinute();
 		} else {
-			$("#btnAnimation").text("Resume Animation");
+			//$("#btnAnimation").text("Resume Animation");
+			$("#btnAnimation").text("Продолжи со анимацијата");
 			running = false;
 		}
 	}
@@ -86,7 +88,8 @@ var running = false;
 		
 		if (!parkingEventsDay.hasParkings){
 			running = false;
-			$("#btnAnimation").text("Start Animation");
+			//$("#btnAnimation").text("Start Animation");
+			$("#btnAnimation").text("Започни Aнимација");
 			parkingEventsDay.Reset();
 			return;
 		}
@@ -115,7 +118,8 @@ var running = false;
 		}
 		running = false;
 		$("#btnAnimation").hide();
-		$("#btnAnimation").text("Start Animation");
+		//$("#btnAnimation").text("Start Animation");
+		$("#btnAnimation").text("Започни Aнимација");
 		$("#title").text("");
 		$("#dayTypeSelect option[value='0']").remove();
 		if ($("#dayTypeSelect").val()!= 0){

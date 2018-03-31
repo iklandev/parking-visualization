@@ -4,10 +4,14 @@ from django.conf import settings
 import pandas as pn
 from datetime import datetime
 import collections
+from django.utils.translation import activate
 
 
 
 # Create your Utility Functions here.
+def activate_language():
+    activate('mk');
+    return
 
 '''
 Return the file path for the CSV file
