@@ -200,7 +200,7 @@ function getReportTitleAndValue (reportType, value, rank, percentage,totalRecord
 		titleInfo+= "Rank: "+rank+"/"+totalRecords;*/
 		titleInfo = "Распределба на паркинг настани <br />";
 		titleInfo+= "Процент од сите паркинг настани: "+percentage+"% <br />"
-		titleInfo+= "Ранк: "+rank+"/"+totalRecords;
+		titleInfo+= "Ранг: "+rank+"/"+totalRecords;
 		break;
 		
 	case "2":
@@ -209,7 +209,7 @@ function getReportTitleAndValue (reportType, value, rank, percentage,totalRecord
 		titleInfo+= "Rank: "+rank+"/"+totalRecords;*/
 		titleInfo = "Распределба на заработувачка <br />";
 		titleInfo+= "Процент од заработувачката: "+percentage+"% <br />"
-		titleInfo+= "Ранк: "+rank+"/"+totalRecords;
+		titleInfo+= "Ранг: "+rank+"/"+totalRecords;
 		break;
 	
 	case "3":
@@ -218,7 +218,7 @@ function getReportTitleAndValue (reportType, value, rank, percentage,totalRecord
 		titleInfo+= "Rank: "+rank+"/"+totalRecords;*/
 		titleInfo = "Просечно времетраење <br />";
 		titleInfo+= "Просечно времетраење на паркинг настан: "+value+" минути <br />"
-		titleInfo+= "Ранк: "+rank+"/"+totalRecords;
+		titleInfo+= "Ранг: "+rank+"/"+totalRecords;
 		break;
 	case "4":
 		/*titleInfo = "Average cost <br />";
@@ -226,7 +226,7 @@ function getReportTitleAndValue (reportType, value, rank, percentage,totalRecord
 		titleInfo+= "Rank: "+rank+"/"+totalRecords;*/
 		titleInfo = "Просечна цена <br />";
 		titleInfo+= "Просечна цена на паркинг настан: $"+value+" <br />"
-		titleInfo+= "Ранк: "+rank+"/"+totalRecords;
+		titleInfo+= "Ранг: "+rank+"/"+totalRecords;
 		break;
 
 	default:

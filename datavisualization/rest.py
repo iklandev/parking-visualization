@@ -31,11 +31,11 @@ def get_fees_summary_daily (request):
 
 def get_parking_trend(request):
     
-    return JsonResponse(datautil.parking_trend(datetime(2016, 4, 4, 18, 00)), safe=False);
+    return JsonResponse(datautil.parking_trend(datetime(2018, 3, 30, 18, 00)), safe=False);
 
 def get_events_last_seven_days(request):
     
-    return JsonResponse(datautil.parking_events_last_seven_days(datetime(2016, 4, 4, 18, 00)), safe=False);
+    return JsonResponse(datautil.parking_events_last_seven_days(datetime(2018, 3, 30, 18, 00)), safe=False);
 
 def get_calendar_detail(request):
     zone = int(request.GET.get('zone', 0));

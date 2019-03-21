@@ -19,7 +19,7 @@ msgstr ""
 
 #: .\datavisualization\views.py:22 .\templates\base.html:57
 msgid "Dashboard"
-msgstr "Табла"
+msgstr "Сумарен приказ"
 
 #: .\datavisualization\views.py:41
 msgid "Calendar Detail"
